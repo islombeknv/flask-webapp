@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
-from app.models import Base
+from core.models import Base
 
 
 db = SQLAlchemy(model_class=Base)
