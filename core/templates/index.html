@@ -22,9 +22,14 @@
                   </div>            
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-2">
                   <button type="submit" class="btn btn-primary btn-lg px-4 gap-3">Say Hello</button>
+                </div>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-2">
+                  <a href="{{ url_for('main.create_event') }}">
+                    <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Create event</button>
+                  </a>
                 </div>            
             </div>
-        </form>
+        </form>  
      </main>      
    </body>
 </html>

@@ -2,6 +2,7 @@ import os
 
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for, Blueprint)
+from .create_db import create_new_event
 
 bp = Blueprint("main", __name__, template_folder="templates")
 
@@ -27,3 +28,22 @@ def hello():
        print('Request for hello page received with no name or blank name -- redirecting')
        return redirect(url_for('main.index'))
 
+
+@bp.route('/create_event', methods=['GET'])
+def create_event_form():
+    return render_template('create_event.html')
+
+
+@bp.route('/create_event', methods=['POST'])
+def create_event():
+    name = request.form.get('name')
+    description = request.form.get('description')
+
+    if not name:
+        print('Missing event name')
+        return redirect(url_for('main.index'))  # or handle error differently
+
+    new_event = create_new_event(name=name, description=description)
+
+    print(f'Created new event with ID {new_event.id}')
+    return render_template('event_created.html', event=new_event)
