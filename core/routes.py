@@ -1,5 +1,5 @@
 import os
-
+import requests
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for, Blueprint)
 from .create_db import create_new_event
@@ -22,8 +22,18 @@ def hello():
    name = request.form.get('name')
 
    if name:
+       print(name, type(name))
+
+       payload = {
+            "name": name,
+            "description": f"a message from {name}"
+        }
+       azure_func_url = "https://mobfunc.azurewebsites.net/api/events?"
+       requests.post(azure_func_url, json=payload)
+       
        print('Request for hello page received with name=%s' % name)
        return render_template('hello.html', name = name)
+   
    else:
        print('Request for hello page received with no name or blank name -- redirecting')
        return redirect(url_for('main.index'))
