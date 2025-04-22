@@ -1,7 +1,7 @@
 import os
 import requests
 from flask import (Flask, redirect, render_template, request,
-                   send_from_directory, url_for, Blueprint)
+                   send_from_directory, url_for, Blueprint, jsonify)
 from .create_db import create_new_event
 
 bp = Blueprint("main", __name__, template_folder="templates")
@@ -57,3 +57,21 @@ def create_event():
 
     print(f'Created new event with ID {new_event.id}')
     return render_template('event_created.html', event=new_event)
+
+
+@bp.route('/create-order', methods=['POST'])
+def create_order():
+    # Simulate Order Creation
+    order = request.json
+    print(f"Order received: {order}")
+    
+    # For now, mock the publishing of the event to the "new OrderItemsReserver service"
+    try:
+        # POST to your Azure Function or Message Queue
+        # response = requests.post(
+        #     'http://localhost:7071/api/ProcessOrder',
+        #     json={"orderId": order["id"], "items": order["items"]}, 
+        # )
+        return jsonify({"status": "Order successfully processed"})
+    except Exception as e:
+        return jsonify({"status": "error", "details": str(e)}), 500
